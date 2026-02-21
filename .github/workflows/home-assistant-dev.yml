@@ -36,8 +36,8 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          source = Path("requirements-dev.txt")
-          target = Path("requirements-dev-ha-dev.txt")
+          source = Path("requirements_dev.txt")
+          target = Path("requirements_dev_ha_dev.txt")
           latest = "${{ steps.hass.outputs.latest }}"
 
           lines = source.read_text(encoding="utf-8").splitlines()
@@ -48,7 +48,7 @@ jobs:
                   else:
                       out.write(f"{line}\n")
           PY
-          pip install -r requirements.txt -r requirements-dev-ha-dev.txt
+          pip install -r requirements.txt -r requirements_dev_ha_dev.txt
 
       - name: Run lint checks
         run: |
