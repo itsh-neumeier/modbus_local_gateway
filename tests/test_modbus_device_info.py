@@ -121,7 +121,7 @@ def test_entity_create_basic() -> None:
     """Test basic entity creation for all data types"""
 
     _config = {
-        "device": {"manufacturer": "Test", "model": "Test"},
+        "device": {"manufacturer": "Test Manufacturer", "model": "Test Model"},
         "read_write_word": {"test_rw": {"name": "Title RW", "address": 1}},
         "read_only_word": {"test_ro": {"name": "Title RO", "address": 2}},
         "read_write_boolean": {
@@ -146,37 +146,37 @@ def test_entity_create_basic() -> None:
         entities = device.entity_descriptions
         assert len(entities) == 4
         assert any(
-            e.name == "Test Title RW"
+            e.name == "Title RW"
             and e.register_address == 1
             and e.data_type == ModbusDataType.HOLDING_REGISTER
             for e in entities
         )
         assert any(
-            e.name == "Test Title RO"
+            e.name == "Title RO"
             and e.register_address == 2
             and e.data_type == ModbusDataType.INPUT_REGISTER
             for e in entities
         )
         assert any(
-            e.name == "Test Title Coil"
+            e.name == "Title Coil"
             and e.register_address == 3
             and e.data_type == ModbusDataType.COIL
             for e in entities
         )
         assert any(
-            e.name == "Test Title Discrete 1"
+            e.name == "Title Discrete 1"
             and e.register_address == 4
             and e.data_type == ModbusDataType.DISCRETE_INPUT
             for e in entities
         )
         assert not any(
-            e.name == "Test Title Discrete 2"
+            e.name == "Title Discrete 2"
             and e.register_address == 5
             and e.data_type == ModbusDataType.DISCRETE_INPUT
             for e in entities
         )
         assert not any(
-            e.name == "Test Title Discrete 3"
+            e.name == "Title Discrete 3"
             and e.register_address == 6
             and e.data_type == ModbusDataType.DISCRETE_INPUT
             for e in entities
@@ -187,7 +187,7 @@ def test_entity_create_all_fields() -> None:
     """Test entity creation with all fields for a Holding Register"""
 
     _config = {
-        "device": {"manufacturer": "Test", "model": "Test"},
+        "device": {"manufacturer": "Test Manufacturer", "model": "Test Model"},
         "read_write_word": {
             "test": {
                 "name": "Title",
@@ -229,7 +229,7 @@ def test_entity_create_all_fields() -> None:
         assert len(entities) == 1
         assert isinstance(entities[0], ModbusSensorEntityDescription)
         entity: ModbusSensorEntityDescription = entities[0]
-        assert entity.name == "Test Title"
+        assert entity.name == "Title"
         assert entity.register_address == 1
         assert entity.is_float
         assert not entity.is_string
@@ -251,7 +251,7 @@ def test_entity_invalid_string_float() -> None:
     """Test invalid entity with both string and float"""
 
     _config = {
-        "device": {"manufacturer": "Test", "model": "Test"},
+        "device": {"manufacturer": "Test Manufacturer", "model": "Test Model"},
         "read_write_word": {
             "test": {"name": "Title", "address": 1, "string": True, "float": True}
         },
@@ -279,7 +279,7 @@ def test_entity_invalid_address() -> None:
     """Test entity missing address"""
 
     _config = {
-        "device": {"manufacturer": "Test", "model": "Test"},
+        "device": {"manufacturer": "Test Manufacturer", "model": "Test Model"},
         "read_write_word": {"test": {"name": "Test"}},
         "read_only_word": {},
         "read_write_boolean": {},
@@ -307,7 +307,7 @@ def test_entity_invalid_control_type() -> None:
     """Test entity with invalid control type for data type"""
 
     _config = {
-        "device": {"manufacturer": "Test", "model": "Test"},
+        "device": {"manufacturer": "Test Manufacturer", "model": "Test Model"},
         "read_only_word": {"test": {"name": "Test", "address": 1, "control": "switch"}},
         "read_write_word": {},
         "read_write_boolean": {},
@@ -352,7 +352,7 @@ def test_validate_scan_interval(
 ) -> None:
     """Test _validate_scan_interval with various scan_interval values."""
     _config = {
-        "device": {"manufacturer": "Test", "model": "Test"},
+        "device": {"manufacturer": "Test Manufacturer", "model": "Test Model"},
         "read_write_word": {
             "test": {"name": "Test", "address": 1, "scan_interval": scan_interval}
         },
