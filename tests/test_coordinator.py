@@ -332,7 +332,7 @@ def test_get_data_returns_none_when_key_not_in_data(
 
 def test_modbus_coordinator_entity_init_sets_attributes() -> None:
     """Test ModbusCoordinatorEntity __init__ sets attributes correctly."""
-    coordinator = MagicMock()
+    coordinator = MagicMock(config_entry=MagicMock(data={}))
     device = MagicMock()
     desc = ModbusSensorEntityDescription(
         register_address=10,

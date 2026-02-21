@@ -8,7 +8,7 @@ from datetime import timedelta
 from typing import Any, Callable
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_HOST, CONF_PORT
+from homeassistant.const import CONF_HOST
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
@@ -172,12 +172,17 @@ class ModbusCoordinatorEntity(CoordinatorEntity):
             return
 
         # Only touch entities that belong to our config entry
-        if self.coordinator.config_entry and entry.config_entry_id != self.coordinator.config_entry.entry_id:
+        if (
+            self.coordinator.config_entry
+            and entry.config_entry_id != self.coordinator.config_entry.entry_id
+        ):
             return
 
         try:
             ent_reg.async_update_entity(self.entity_id, new_entity_id=desired_entity_id)
-            _LOGGER.info("Renamed entity_id %s -> %s", self.entity_id, desired_entity_id)
+            _LOGGER.info(
+                "Renamed entity_id %s -> %s", self.entity_id, desired_entity_id
+            )
         except ValueError as exc:
             _LOGGER.warning(
                 "Cannot rename entity_id %s -> %s (%s)",
